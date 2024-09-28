@@ -13,6 +13,13 @@ target/
 .springBeans
 .sts4-cache
 
+### .env Files ##
+.env
+.env.*
+
+### opentelemetry-javaagent.jar ###
+**/opentelemetry-javaagent.jar
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
