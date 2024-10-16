@@ -3,6 +3,7 @@ package br.com.pepper.account.service;
 import br.com.pepper.account.dto.AccountResponse;
 import br.com.pepper.account.model.Account;
 import br.com.pepper.account.repository.AccountRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,8 @@ public class AccountService {
   }
 
   public AccountResponse getAccount(final Long id) {
-    return modelToDto(repository.findById(id).orElseThrow(RuntimeException::new));
+    Optional<Account> account = repository.findById(id);
+    return modelToDto(account.orElseThrow(RuntimeException::new));
   }
 
   private AccountResponse modelToDto(final Account account) {
