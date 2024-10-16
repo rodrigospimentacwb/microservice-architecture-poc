@@ -9,12 +9,14 @@
         <module name="transaction-microservice" />
         <module name="account-microservice" />
         <module name="statement-microservice" />
+        <module name="account-microservice-migration" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="account-microservice" options="-parameters" />
+      <module name="account-microservice-migration" options="-parameters" />
       <module name="statement-microservice" options="-parameters" />
       <module name="transaction-microservice" options="-parameters" />
     </option>

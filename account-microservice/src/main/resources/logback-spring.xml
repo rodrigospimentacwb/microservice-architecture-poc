@@ -1,0 +1,45 @@
+<configuration>
+
+    <!-- Define o caminho do log a partir de uma variável de ambiente -->
+    <property name="LOG_PATH" value="${LOG_PATH}" />
+
+    <!-- Appender para console com cores (usando ANSI) Logs e Classes coloridas -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg [correlationId=%X{correlationId}]%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para arquivo em formato JSON -->
+    <appender name="FILE_JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Arquivos de log rotacionados diariamente -->
+            <fileNamePattern>${LOG_PATH}/app-json-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Retenção de 15 dias e maximo de 1GB-->
+            <maxHistory>15</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"application":"account-microservice"}</customFields>
+            <fieldNames>
+                <timestamp>timestamp</timestamp>
+                <level>log_level</level>
+                <logger>logger_name</logger>
+                <message>message</message>
+                <correlationId>correlationId</correlationId> <!-- Trace ID -->
+            </fieldNames>
+        </encoder>
+    </appender>
+
+    <!-- Nível de log para todo o aplicativo -->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE_JSON" />
+    </root>
+
+    <!-- Nível de log para pacotes específicos, se necessário -->
+    <logger name="org.springframework" level="warn" />
+
+</configuration>

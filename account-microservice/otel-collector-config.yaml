@@ -1,0 +1,32 @@
+receivers:
+  # Receiver OTLP para coletar dados de telemetria usando gRPC e HTTP.
+  otlp:
+    protocols:
+      grpc:  # Protocolo gRPC habilitado.
+      http:  # Protocolo HTTP habilitado.
+
+processors:
+  batch:
+
+exporters:
+  # Exportador para enviar métricas e traces para o Elasticsearch.
+  elasticsearch:
+    endpoints: ["http://localhost:9200"]
+    index: "otel-metrics"
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [elasticsearch]
+
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [elasticsearch]
+
+    logs:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ elasticsearch ]
