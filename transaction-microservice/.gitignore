@@ -17,6 +17,10 @@ target/
 .env
 .env.*
 
+### Logs ##
+app.log
+app-json-*.log
+
 ### opentelemetry-javaagent.jar ###
 **/opentelemetry-javaagent.jar
 
