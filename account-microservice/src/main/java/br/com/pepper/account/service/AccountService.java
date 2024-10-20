@@ -1,6 +1,7 @@
 package br.com.pepper.account.service;
 
 import br.com.pepper.account.dto.AccountResponse;
+import br.com.pepper.account.exception.CustomNotFoundException;
 import br.com.pepper.account.model.Account;
 import br.com.pepper.account.repository.AccountRepository;
 import java.util.Optional;
@@ -17,7 +18,8 @@ public class AccountService {
 
   public AccountResponse getAccount(final Long id) {
     Optional<Account> account = repository.findById(id);
-    return modelToDto(account.orElseThrow(RuntimeException::new));
+    return modelToDto(
+        account.orElseThrow(() -> new CustomNotFoundException("Account " + id + " not found")));
   }
 
   private AccountResponse modelToDto(final Account account) {
