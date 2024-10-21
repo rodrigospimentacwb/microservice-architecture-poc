@@ -4,7 +4,7 @@
     <module name="account-microservice" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="br.com.pepper.account.*" />
+        <option name="PATTERN" value="br.com.pepper.account.component.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
